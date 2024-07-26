@@ -86,9 +86,9 @@ namespace KniControllerExample
             while (_timeElapsed >= _updateTime)
             {
                 _timeElapsed -= _updateTime;
-                Console.WriteLine($"Right Trigger: {gamePadState.IsButtonDown(Buttons.RightTrigger)}");
-                Console.WriteLine($"Left Trigger: {gamePadState.IsButtonDown(Buttons.LeftTrigger)}");
-                Console.WriteLine($"Right Shoulder: {gamePadState.IsButtonDown(Buttons.RightShoulder)}");
+                Console.WriteLine($"Right Trigger: {gamePadState.IsButtonDown(Buttons.RightTrigger)}"); // Don't work
+                Console.WriteLine($"Left Trigger: {gamePadState.IsButtonDown(Buttons.LeftTrigger)}"); // Don't work
+                Console.WriteLine($"Right Shoulder: {gamePadState.IsButtonDown(Buttons.RightShoulder)}"); 
                 Console.WriteLine($"Left Shoulder: {gamePadState.IsButtonDown(Buttons.LeftShoulder)}");
             }
 
