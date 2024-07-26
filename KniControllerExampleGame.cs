@@ -18,6 +18,7 @@ namespace KniControllerExample
         SpriteBatch spriteBatch;
         private const float _updateTime = 1;
         private float _timeElapsed = 0;
+        private TimeSpan lastUpdateCall = TimeSpan.Zero;
 
         public KniControllerExampleGame()
         {
@@ -86,10 +87,38 @@ namespace KniControllerExample
             while (_timeElapsed >= _updateTime)
             {
                 _timeElapsed -= _updateTime;
+                Console.WriteLine("Original Test");
                 Console.WriteLine($"Right Trigger: {gamePadState.IsButtonDown(Buttons.RightTrigger)}"); // Don't work
                 Console.WriteLine($"Left Trigger: {gamePadState.IsButtonDown(Buttons.LeftTrigger)}"); // Don't work
                 Console.WriteLine($"Right Shoulder: {gamePadState.IsButtonDown(Buttons.RightShoulder)}"); 
                 Console.WriteLine($"Left Shoulder: {gamePadState.IsButtonDown(Buttons.LeftShoulder)}");
+            }
+
+
+            // to prevent spamming of output
+            if ((gameTime.TotalGameTime - lastUpdateCall).TotalSeconds > 1)
+            {
+                lastUpdateCall = gameTime.TotalGameTime;
+                Console.WriteLine("Vic Test");
+                Console.WriteLine($"At {lastUpdateCall}");
+                Console.WriteLine(GetStatusFor(GamePad.GetState(PlayerIndex.One), "One"));
+                Console.WriteLine(GetStatusFor(GamePad.GetState(PlayerIndex.Two), "Two"));
+                Console.WriteLine(GetStatusFor(GamePad.GetState(PlayerIndex.Three), "Three"));
+                Console.WriteLine(GetStatusFor(GamePad.GetState(PlayerIndex.Four), "Four"));
+
+                Console.WriteLine();
+            }
+
+            string GetStatusFor(GamePadState state, string name)
+            {
+                var isA = state.Buttons.A;
+                var isB = state.Buttons.B;
+                var isX = state.Buttons.X;
+                var isY = state.Buttons.Y;
+                var isRT = state.Triggers.Right; // This works!
+                var isLT = state.Triggers.Left; // This works!
+
+                return $"{name}:{state.IsConnected} A:{isA} B:{isB} X:{isX} Y:{isY} RT:{isRT} LT: {isLT}";
             }
 
             base.Update(gameTime);
